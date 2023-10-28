@@ -1,3 +1,62 @@
-GET http://localhost:3001/examples
+//ATLETI
+GET http://localhost:3001/athletes
 
 ####
+GET http://localhost:3001/athletes/byId/653d787c8dee88e7c83e7cf6
+
+####
+POST http://localhost:3001/athletes/create HTTP/1.1
+Content-Type: application/json
+
+{
+  "name":"Ivan",
+  "surname":"Zaytsev",
+  "email":"ema@gmail.com",
+  "age":23 ,
+  "cover":" ",
+  "password":"0000",
+  "role":"outside-hitter"
+}
+
+####
+PATCH http://localhost:3001/athletes/update/653d787c8dee88e7c83e7cf6 HTTP/1.1
+Content-Type: application/json
+
+{
+  "cover":"da aggiornare"
+}
+
+####
+DELETE http://localhost:3001/athletes/delete/653d74c7618062e63c1566e5 HTTP/1.1
+//
+//
+//
+//SQUADRE
+####
+GET http://localhost:3001/teams
+
+####
+GET http://localhost:3001/teams/byId/653d7e868f87a126aacf7838
+
+####
+POST http://localhost:3001/teams/create HTTP/1.1
+Content-Type: application/json
+
+{
+  "name":"Pallavolo Bologna",
+  "email":"pallavolo@gmail.com",
+  "password":"0000"
+}
+
+####
+PATCH http://localhost:3001/teams/update/653d7e868f87a126aacf7838 HTTP/1.1
+Content-Type: application/json
+
+{
+  "email":"pbologna@info.com"
+}
+
+####
+DELETE http://localhost:3001/teams/delete/653d7e868f87a126aacf7838 HTTP/1.1
+
+
