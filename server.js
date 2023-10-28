@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const PORT = 3001;
+require('dotenv').config()
 const exampleRoute = require('./routes/exampleRoute')
 
 const app = express();
@@ -15,7 +16,7 @@ app.use('/', exampleRoute)
 
 //SERVER SETTINGS
 mongoose.connect(
-  "mongodb+srv://g00emanuele:pMpuARnnwmcUada3@epicluster.gyhucxu.mongodb.net/",
+  process.env.MONGODB_URL,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
