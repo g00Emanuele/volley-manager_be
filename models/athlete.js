@@ -20,7 +20,7 @@ const AthleteSchema = new mongoose.Schema(
     },
     cover: {
       type: String,
-      required: true,
+      required: false,
     },
     password: {
       type: String,
@@ -29,6 +29,10 @@ const AthleteSchema = new mongoose.Schema(
     role:{
         type:String,
         enum:['setter', 'middle-blocker', 'outside-hitter', 'opposite-hitter', 'libero']
+    },
+    team: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'teamModel'
     }
   },
   { timestamps: true, strict: true }

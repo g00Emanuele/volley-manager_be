@@ -3,11 +3,12 @@ const athletes = express.Router();
 const AthleteModel = require("../models/athlete");
 const validateAthlete = require("../middlewares/validateAthlete");
 const bcrypt = require("bcrypt");
+const verifyToken = require("../middlewares/verifyToken");
 
 //GET DEGLI ATLETI
-athletes.get("/athletes", async (req, res) => {
+athletes.get("/athletes", verifyToken, async (req, res) => {
   try {
-    const athletes = await AthleteModel.find();
+    const athletes = await AthleteModel.find().populate("team");
     res.status(200).send({
       statusCode: 200,
       athletes,
@@ -31,8 +32,9 @@ athletes.post("/athletes/create", validateAthlete, async (req, res) => {
     email: req.body.email,
     age: req.body.age,
     cover: req.body.cover,
-    password: hashedPassword, //hashedPassword
+    password: hashedPassword, 
     role: req.body.role,
+    team: '653d7f400f19c4c78bca2df2',
   });
   try {
     const athlete = await newAthlete.save();
@@ -54,7 +56,7 @@ athletes.get("/athletes/byId/:athleteId", async (req, res) => {
   const { athleteId } = req.params;
 
   try {
-    const athlete = await AthleteModel.findById(athleteId);
+    const athlete = await AthleteModel.findById(athleteId).populate('team');
     if (!athlete) {
       return res.status(404).send({
         statusCode: 404,

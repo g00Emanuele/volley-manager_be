@@ -1,8 +1,9 @@
 //ATLETI
 GET http://localhost:3001/athletes
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDAxMTYxMjNmOGM1NDBkYTE5YWI0YiIsIm5hbWUiOiJJdmFuIiwic3VybmFtZSI6IlpheXRzZXYiLCJlbWFpbCI6ImVtYUBnbWFpbC5jb20iLCJpYXQiOjE2OTg2OTc5NDksImV4cCI6MTY5ODc4NDM0OX0.4s8PaAyJ7F9dzmx4cdRLAE3VsQ66wTL3Irwy2lwMKTU 
 
 ####
-GET http://localhost:3001/athletes/byId/653d787c8dee88e7c83e7cf6
+GET http://localhost:3001/athletes/byId/653ffd38be6d94565662c8f1
 
 ####
 POST http://localhost:3001/athletes/create HTTP/1.1
@@ -15,7 +16,8 @@ Content-Type: application/json
   "age":23 ,
   "cover":" ",
   "password":"0000",
-  "role":"outside-hitter"
+  "role":"outside-hitter",
+  "team":"653d7f400f19c4c78bca2df2"
 }
 
 ####
@@ -58,5 +60,16 @@ Content-Type: application/json
 
 ####
 DELETE http://localhost:3001/teams/delete/653d7e868f87a126aacf7838 HTTP/1.1
+//
+//
+//
+// LOGIN
+####
+POST http://localhost:3001/loginAthlete
+Content-Type: application/json
 
+{
+  "email":"ema@gmail.com",
+  "password":"0000"
+}
 
