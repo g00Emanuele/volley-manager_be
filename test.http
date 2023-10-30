@@ -73,3 +73,13 @@ Content-Type: application/json
   "password":"0000"
 }
 
+####
+POST http://localhost:3001/loginTeam
+Content-Type: application/json
+
+{
+  "email":"pallavolo@gmail.com",
+  "password":"0000"
+}
+
+

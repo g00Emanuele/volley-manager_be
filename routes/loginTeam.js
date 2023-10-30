@@ -1,13 +1,13 @@
 const express = require("express");
-const loginAthlete = express.Router();
+const loginTeam = express.Router();
 const bcrypt = require("bcrypt");
-const AthleteModel = require("../models/athlete");
+const TeamModel = require("../models/team");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-loginAthlete.post("/loginAthlete", async (req, res) => {
-  const athlete = await AthleteModel.findOne({ email: req.body.email });
-  if (!athlete) {
+loginTeam.post("/loginTeam", async (req, res) => {
+  const team = await TeamModel.findOne({ email: req.body.email });
+  if (!team) {
     return res.status(404).send({
       message: "Email o password errati",
       statusCode: 404,
@@ -16,7 +16,7 @@ loginAthlete.post("/loginAthlete", async (req, res) => {
 
   const validPassword = await bcrypt.compare(
     req.body.password,
-    athlete.password
+    team.password
   );
 
   if (!validPassword) {
@@ -28,10 +28,9 @@ loginAthlete.post("/loginAthlete", async (req, res) => {
 
   const token = jwt.sign(
     {
-      id: athlete._id,
-      name: athlete.name,
-      surname: athlete.surname,
-      email: athlete.email,
+      id: team._id,
+      name: team.name,
+      email: team.email,
     },
     process.env.JWT_SECRET,
     {
@@ -48,4 +47,4 @@ loginAthlete.post("/loginAthlete", async (req, res) => {
   console.log(token)
 });
 
-module.exports = loginAthlete;
+module.exports = loginTeam;

@@ -5,6 +5,7 @@ require("dotenv").config();
 const athletesRoute = require("./routes/athletes");
 const teamsRoute = require("./routes/teams");
 const loginAthleteRoute = require('./routes/loginAthlete')
+const loginTeamRoute = require('./routes/loginTeam')
 const logger = require('./middlewares/logger')
 const cors = require("cors");
 
@@ -18,6 +19,7 @@ app.use(logger)
 app.use("/", athletesRoute);
 app.use("/", teamsRoute);
 app.use("/", loginAthleteRoute);
+app.use("/", loginTeamRoute);
 
 //SERVER SETTINGS
 mongoose.connect(process.env.MONGODB_URL, {
