@@ -3,6 +3,11 @@ const teams = express.Router();
 const TeamModel = require("../models/team");
 const validateTeam = require("../middlewares/validateTeam");
 const bcrypt = require("bcrypt");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+require("dotenv").config();
+const multer = require("multer");
+const crypto = require("crypto");
 
 //GET DELLE SQUADRE
 teams.get("/teams", async (req, res) => {
@@ -19,6 +24,41 @@ teams.get("/teams", async (req, res) => {
     });
   }
 });
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const cloudStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "teamCovers",
+    format: async (req, file) => "jpg",
+    public_id: (req, file) => file.name,
+  },
+});
+
+const cloudUpload = multer({ storage: cloudStorage });
+
+//POST DELLE IMMAGINI DI PROFILO SQUADRE
+teams.post(
+  "/teams/cloudUpload",
+  cloudUpload.single("cover"),
+  async (req, res) => {
+    try {
+      res.status(200).json({
+        cover: req.file.path,
+      });
+    } catch (error) {
+      res.status(500).send({
+        statusCode: 500,
+        message: "Errore interno del server",
+      });
+    }
+  }
+);
 
 //POST DI UNA SQUADRA
 teams.post("/teams/create", validateTeam, async (req, res) => {

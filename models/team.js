@@ -14,6 +14,10 @@ const TeamSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    cover: {
+      type: String,
+      required: false,
+    },
   },
   { timestamps: true, strict: true }
 );

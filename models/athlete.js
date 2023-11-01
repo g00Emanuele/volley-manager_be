@@ -26,16 +26,28 @@ const AthleteSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    role:{
-        type:String,
-        enum:['setter', 'middle-blocker', 'outside-hitter', 'opposite-hitter', 'libero']
+    role: {
+      type: String,
+      enum: [
+        "setter",
+        "middle-blocker",
+        "outside-hitter",
+        "opposite-hitter",
+        "libero",
+      ],
+    },
+    requestedTeam: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "teamModel",
+      required: false
     },
     team: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'teamModel'
-    }
+      ref: "teamModel",
+      required: false
+    },
   },
   { timestamps: true, strict: true }
 );
 
-module.exports = mongoose.model('athleteModel', AthleteSchema, "athletes");
+module.exports = mongoose.model("athleteModel", AthleteSchema, "athletes");

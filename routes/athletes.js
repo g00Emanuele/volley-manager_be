@@ -4,6 +4,28 @@ const AthleteModel = require("../models/athlete");
 const validateAthlete = require("../middlewares/validateAthlete");
 const bcrypt = require("bcrypt");
 const verifyToken = require("../middlewares/verifyToken");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+require("dotenv").config();
+const multer = require("multer");
+const crypto = require("crypto");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const cloudStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "athletesCovers",
+    format: async (req, file) => "jpg",
+    public_id: (req, file) => file.name,
+  },
+});
+
+const cloudUpload = multer({ storage: cloudStorage });
 
 //GET DEGLI ATLETI
 athletes.get("/athletes", verifyToken, async (req, res) => {
@@ -21,6 +43,24 @@ athletes.get("/athletes", verifyToken, async (req, res) => {
   }
 });
 
+//POST DELLE IMMAGINI DI PROFILO ATLETA
+athletes.post(
+  "/athletes/cloudUpload",
+  cloudUpload.single("cover"),
+  async (req, res) => {
+    try {
+      res.status(200).json({
+        cover: req.file.path,
+      });
+    } catch (error) {
+      res.status(500).send({
+        statusCode: 500,
+        message: "Errore interno del server",
+      });
+    }
+  }
+);
+
 //POST DI UN ATLETA
 athletes.post("/athletes/create", validateAthlete, async (req, res) => {
   const salt = await bcrypt.genSalt(10);
@@ -30,11 +70,12 @@ athletes.post("/athletes/create", validateAthlete, async (req, res) => {
     name: req.body.name,
     surname: req.body.surname,
     email: req.body.email,
-    age: req.body.age,
+    age: Number(req.body.age),
     cover: req.body.cover,
     password: hashedPassword, 
     role: req.body.role,
-    team: '653d7f400f19c4c78bca2df2',
+    team: req.body.team,
+    requestedTeam: req.body.requestedTeam
   });
   try {
     const athlete = await newAthlete.save();
