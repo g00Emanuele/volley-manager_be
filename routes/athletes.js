@@ -1,6 +1,7 @@
 const express = require("express");
 const athletes = express.Router();
 const AthleteModel = require("../models/athlete");
+const TeamModel = require("../models/team");
 const validateAthlete = require("../middlewares/validateAthlete");
 const bcrypt = require("bcrypt");
 const verifyToken = require("../middlewares/verifyToken");
@@ -61,6 +62,36 @@ athletes.post(
   }
 );
 
+//GET ATLETA APPARTENENTE A UNA SQUADRA SPECIFICA
+athletes.get("/athletes/byTeam",  verifyToken, async (req, res) => {
+  const { team, page, pageSize = 8 } = req.query;
+
+  console.log(team);
+  try {
+    const athletesByTeam = await AthleteModel.find({
+      team: team,
+    }).populate('team')
+      .limit(pageSize)
+      .skip((page - 1) * pageSize);
+    const totalAthletes = await AthleteModel.count();
+
+
+    res.status(200).send({
+      athletesByTeam,
+      statusCode: 200,
+      currentPage: Number(page),
+      totalPages: Math.ceil(totalAthletes / pageSize),
+      totalAthletes,
+
+    });
+  } catch (e) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Errore interno del server",
+    });
+  }
+});
+
 //POST DI UN ATLETA
 athletes.post("/athletes/create", validateAthlete, async (req, res) => {
   const salt = await bcrypt.genSalt(10);
@@ -72,10 +103,10 @@ athletes.post("/athletes/create", validateAthlete, async (req, res) => {
     email: req.body.email,
     age: Number(req.body.age),
     cover: req.body.cover,
-    password: hashedPassword, 
+    password: hashedPassword,
     role: req.body.role,
     team: req.body.team,
-    requestedTeam: req.body.requestedTeam
+    requestedTeam: req.body.requestedTeam,
   });
   try {
     const athlete = await newAthlete.save();
@@ -97,7 +128,7 @@ athletes.get("/athletes/byId/:athleteId", async (req, res) => {
   const { athleteId } = req.params;
 
   try {
-    const athlete = await AthleteModel.findById(athleteId).populate('team');
+    const athlete = await AthleteModel.findById(athleteId).populate("team");
     if (!athlete) {
       return res.status(404).send({
         statusCode: 404,
