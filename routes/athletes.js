@@ -92,6 +92,36 @@ athletes.get("/athletes/byTeam",  verifyToken, async (req, res) => {
   }
 });
 
+//GET ATLETA RICHIEDENTE UNA SQUADRA SPECIFICA
+athletes.get("/athletes/byTeamRequest", async (req, res) => {
+  const { requestedTeam, page, pageSize = 8 } = req.query;
+
+  console.log(requestedTeam);
+  try {
+    const athletesByTeamRequest = await AthleteModel.find({
+      requestedTeam: requestedTeam,
+    }).populate('requestedTeam')
+      .limit(pageSize)
+      .skip((page - 1) * pageSize);
+    const totalAthletes = await AthleteModel.count();
+
+
+    res.status(200).send({
+      athletesByTeamRequest,
+      statusCode: 200,
+      currentPage: Number(page),
+      totalPages: Math.ceil(totalAthletes / pageSize),
+      totalAthletes,
+
+    });
+  } catch (e) {
+    res.status(500).send({
+      statusCode: 500,
+      message: "Errore interno del server",
+    });
+  }
+});
+
 //POST DI UN ATLETA
 athletes.post("/athletes/create", validateAthlete, async (req, res) => {
   const salt = await bcrypt.genSalt(10);
@@ -180,7 +210,7 @@ athletes.patch("/athletes/update/:athleteId", async (req, res) => {
 });
 
 //DELETE DI UN ATLETA
-athletes.delete("/athletes/delete/:athleteId", async (req, res) => {
+athletes.delete("/athletes/delete/:athleteId", verifyToken, async (req, res) => {
   const { athleteId } = req.params;
 
   try {

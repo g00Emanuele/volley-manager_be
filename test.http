@@ -1,5 +1,5 @@
 //ATLETI
-GET http://localhost:3001/athletes/byTeam?team=6542b0083f83da4168a24a7b
+GET http://localhost:3001/athletes/byTeamRequest?requestedTeam=6542b0083f83da4168a24a7b
 Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDAxMTYxMjNmOGM1NDBkYTE5YWI0YiIsIm5hbWUiOiJJdmFuIiwic3VybmFtZSI6IlpheXRzZXYiLCJlbWFpbCI6ImVtYUBnbWFpbC5jb20iLCJpYXQiOjE2OTg2OTc5NDksImV4cCI6MTY5ODc4NDM0OX0.4s8PaAyJ7F9dzmx4cdRLAE3VsQ66wTL3Irwy2lwMKTU 
 
 ####
@@ -10,12 +10,13 @@ POST http://localhost:3001/athletes/create HTTP/1.1
 Content-Type: application/json
 
 {
-  "name":"Ivan",
-  "surname":"Zaytsev",
-  "email":"ema@gmail.com",
+  "name":"Simone",
+  "surname":"Giannelli",
+  "email":"ema@mail.com",
   "age":23 ,
+  "cover":"https://upload.wikimedia.org/wikipedia/commons/f/f1/Simone_Giannelli_%28Legavolley_2018%29.jpg",
   "password":"0000",
-  "role":"outside-hitter",
+  "role":"setter",
   "team":"6542b0083f83da4168a24a7b"
 }
 
@@ -28,7 +29,7 @@ Content-Type: application/json
 }
 
 ####
-DELETE http://localhost:3001/athletes/delete/653d74c7618062e63c1566e5 HTTP/1.1
+DELETE http://localhost:3001/athletes/delete/654934362c5b29f818928b78 HTTP/1.1
 //
 //
 //
