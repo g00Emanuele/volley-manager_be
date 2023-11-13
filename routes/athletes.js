@@ -63,18 +63,20 @@ athletes.post(
 );
 
 //GET ATLETA APPARTENENTE A UNA SQUADRA SPECIFICA
-athletes.get("/athletes/byTeam",  verifyToken, async (req, res) => {
+athletes.get("/athletes/byTeam", verifyToken, async (req, res) => {
   const { team, page, pageSize = 8 } = req.query;
 
   console.log(team);
   try {
     const athletesByTeam = await AthleteModel.find({
       team: team,
-    }).populate('team')
+    })
+      .populate("team")
       .limit(pageSize)
       .skip((page - 1) * pageSize);
-    const totalAthletes = await AthleteModel.count();
-
+    const totalAthletes = await AthleteModel.find({
+      team: team,
+    }).count();
 
     res.status(200).send({
       athletesByTeam,
@@ -82,7 +84,6 @@ athletes.get("/athletes/byTeam",  verifyToken, async (req, res) => {
       currentPage: Number(page),
       totalPages: Math.ceil(totalAthletes / pageSize),
       totalAthletes,
-
     });
   } catch (e) {
     res.status(500).send({
@@ -100,11 +101,13 @@ athletes.get("/athletes/byTeamRequest", async (req, res) => {
   try {
     const athletesByTeamRequest = await AthleteModel.find({
       requestedTeam: requestedTeam,
-    }).populate('requestedTeam')
+    })
+      .populate("requestedTeam")
       .limit(pageSize)
       .skip((page - 1) * pageSize);
-    const totalAthletes = await AthleteModel.count();
-
+    const totalAthletes = await AthleteModel.find({
+      requestedTeam: requestedTeam,
+    }).count();
 
     res.status(200).send({
       athletesByTeamRequest,
@@ -112,7 +115,6 @@ athletes.get("/athletes/byTeamRequest", async (req, res) => {
       currentPage: Number(page),
       totalPages: Math.ceil(totalAthletes / pageSize),
       totalAthletes,
-
     });
   } catch (e) {
     res.status(500).send({
@@ -210,27 +212,31 @@ athletes.patch("/athletes/update/:athleteId", async (req, res) => {
 });
 
 //DELETE DI UN ATLETA
-athletes.delete("/athletes/delete/:athleteId", verifyToken, async (req, res) => {
-  const { athleteId } = req.params;
+athletes.delete(
+  "/athletes/delete/:athleteId",
+  verifyToken,
+  async (req, res) => {
+    const { athleteId } = req.params;
 
-  try {
-    const athlete = await AthleteModel.findByIdAndDelete(athleteId);
-    if (!athlete) {
-      return res.status(404).send({
-        statusCode: 404,
-        message: "This athlete doesn't exists or already deleted!",
+    try {
+      const athlete = await AthleteModel.findByIdAndDelete(athleteId);
+      if (!athlete) {
+        return res.status(404).send({
+          statusCode: 404,
+          message: "This athlete doesn't exists or already deleted!",
+        });
+      }
+      res.status(200).send({
+        statusCode: 200,
+        message: "athlete deleted succesfully",
+      });
+    } catch (error) {
+      res.status(500).send({
+        statusCode: 500,
+        message: "Errore interno del server",
       });
     }
-    res.status(200).send({
-      statusCode: 200,
-      message: "athlete deleted succesfully",
-    });
-  } catch (error) {
-    res.status(500).send({
-      statusCode: 500,
-      message: "Errore interno del server",
-    });
   }
-});
+);
 
 module.exports = athletes;

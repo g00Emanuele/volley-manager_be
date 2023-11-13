@@ -9,7 +9,7 @@ loginAthlete.post("/loginAthlete", async (req, res) => {
   const athlete = await AthleteModel.findOne({ email: req.body.email });
   if (!athlete) {
     return res.status(404).send({
-      message: "Email o password errati",
+      message: "Incorrect email or password",
       statusCode: 404,
     });
   }
@@ -21,7 +21,7 @@ loginAthlete.post("/loginAthlete", async (req, res) => {
 
   if (!validPassword) {
     return res.status(400).send({
-      message: "Email o password errati",
+      message: "Incorrect email or password",
       statusCode: 400,
     });
   }

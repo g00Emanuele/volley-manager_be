@@ -2,7 +2,7 @@ const validateTeam = (req, res, next) => {
   const errors = [];
   const { name, email, password } = req.body;
   if (typeof name !== "string") {
-    errors.push("Name must be a string");
+    errors.push("Team name must be a string");
   }
   if (typeof email !== "string") {
     errors.push("Email must be a string");

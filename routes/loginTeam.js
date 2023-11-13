@@ -9,7 +9,7 @@ loginTeam.post("/loginTeam", async (req, res) => {
   const team = await TeamModel.findOne({ email: req.body.email });
   if (!team) {
     return res.status(404).send({
-      message: "Email o password errati",
+      message: "Incorrect email or password",
       statusCode: 404,
     });
   }
@@ -21,7 +21,7 @@ loginTeam.post("/loginTeam", async (req, res) => {
 
   if (!validPassword) {
     return res.status(400).send({
-      message: "Email o password errati",
+      message: "Incorrect email or password",
       statusCode: 400,
     });
   }

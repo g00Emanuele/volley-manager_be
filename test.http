@@ -10,22 +10,24 @@ POST http://localhost:3001/athletes/create HTTP/1.1
 Content-Type: application/json
 
 {
-  "name":"Simone",
-  "surname":"Giannelli",
+  "name":"frweq",
+  "surname":"Michieletto",
   "email":"ema@mail.com",
   "age":23 ,
-  "cover":"https://upload.wikimedia.org/wikipedia/commons/f/f1/Simone_Giannelli_%28Legavolley_2018%29.jpg",
+  "cover":"https://upload.wikimedia.org/wikipedia/commons/f/f0/Alessandro_Michieletto_%28Legavolley_2021%29.png",
   "password":"0000",
-  "role":"setter",
-  "team":"6542b0083f83da4168a24a7b"
+  "role":"outside-hitter",
+  "requestedTeam":"6542b0083f83da4168a24a7b",
+  "team":null
 }
 
 ####
-PATCH http://localhost:3001/athletes/update/653d787c8dee88e7c83e7cf6 HTTP/1.1
+PATCH http://localhost:3001/athletes/update/654f8439f578e0b32fe81c2d HTTP/1.1
 Content-Type: application/json
 
 {
-  "cover":"da aggiornare"
+  "team":"6542b0083f83da4168a24a7b",
+  "requestedTeam":null
 }
 
 ####
