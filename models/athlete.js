@@ -20,6 +20,7 @@ const AthleteSchema = new mongoose.Schema(
     },
     cover: {
       type: String,
+      default:'https://i.stack.imgur.com/l60Hf.png',
       required: false,
     },
     password: {

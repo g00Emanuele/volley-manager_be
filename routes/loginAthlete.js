@@ -32,6 +32,9 @@ loginAthlete.post("/loginAthlete", async (req, res) => {
       name: athlete.name,
       surname: athlete.surname,
       email: athlete.email,
+      cover: athlete.cover,
+      team: athlete.team,
+      requestedTeam: athlete.requestedTeam
     },
     process.env.JWT_SECRET,
     {
