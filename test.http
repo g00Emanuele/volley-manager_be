@@ -85,3 +85,20 @@ Content-Type: application/json
 }
 
 
+//
+
+####
+GET http://localhost:3001/events/byTeam?team=6542b0083f83da4168a24a7b&page=1 HTTP/1.1
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDJiMDA4M2Y4M2RhNDE2OGEyNGE3YiIsIm5hbWUiOiJNb2RlbmEgVm9sbGV5IiwiZW1haWwiOiJtb2RlbmFAbWFpbC5jb20iLCJpYXQiOjE3MDAwODUxNTMsImV4cCI6MTcwMDE3MTU1M30.QSsGHFoLeN9qJnS7Cl2MD00CkagNHVEzVkMxyJwttgc
+
+####
+POST http://localhost:3001/events/create HTTP/1.1
+Content-Type: application/json
+
+{
+  "title":"Prova",
+  "content":"Testo di prova",
+  "team":"6542b0083f83da4168a24a7b"
+}
+
+

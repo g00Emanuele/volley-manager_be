@@ -4,20 +4,21 @@ const PORT = 3001;
 require("dotenv").config();
 const athletesRoute = require("./routes/athletes");
 const teamsRoute = require("./routes/teams");
-const loginAthleteRoute = require('./routes/loginAthlete')
-const loginTeamRoute = require('./routes/loginTeam')
-const logger = require('./middlewares/logger')
+const eventsRoute = require("./routes/events");
+const loginAthleteRoute = require("./routes/loginAthlete");
+const loginTeamRoute = require("./routes/loginTeam");
+const logger = require("./middlewares/logger");
 const cors = require("cors");
-
 
 const app = express();
 app.use(cors());
 
 app.use(express.json());
-app.use(logger)
+app.use(logger);
 //ROUTES
 app.use("/", athletesRoute);
 app.use("/", teamsRoute);
+app.use("/", eventsRoute);
 app.use("/", loginAthleteRoute);
 app.use("/", loginTeamRoute);
 
