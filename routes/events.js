@@ -21,7 +21,7 @@ events.get("/events", verifyToken, async (req, res) => {
 });
 
 events.get("/events/byTeam", verifyToken, async (req, res) => {
-  const { team, page, pageSize = 8 } = req.query;
+  const { team, page, pageSize = 3 } = req.query;
 
   try {
     const eventsByTeam = await EventModel.find({
@@ -50,7 +50,7 @@ events.get("/events/byTeam", verifyToken, async (req, res) => {
 });
 
 //POST
-events.post("/events/create", validateEvent, verifyToken, async (req, res) => {
+events.post("/events/create", validateEvent, async (req, res) => {
   const newEvent = new EventModel({
     title: req.body.title,
     content: req.body.content,
@@ -66,7 +66,7 @@ events.post("/events/create", validateEvent, verifyToken, async (req, res) => {
   } catch (error) {
     res.status(500).send({
       statusCode: 500,
-      message: "Errore interno del server",
+      message: "Server error",
     });
   }
 });

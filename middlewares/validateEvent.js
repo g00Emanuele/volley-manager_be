@@ -8,7 +8,7 @@ const validateEvent = (req, res, next) => {
       errors.push("Content must be a string");
     }
     if (typeof team !== "string") {
-      errors.push("Password must be a string");
+      errors.push("Team must be a string");
     }
     if (errors.length > 0) {
       res.status(400).send({ errors });
