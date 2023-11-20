@@ -10,11 +10,11 @@ POST http://localhost:3001/athletes/create HTTP/1.1
 Content-Type: application/json
 
 {
-  "name":"Alessandro",
-  "surname":"Michieletto",
-  "email":"ale@mail.com",
+  "name":"Daniele",
+  "surname":"Lavia",
+  "email":"dani@mail.com",
   "age":23 ,
-  "cover":"https://upload.wikimedia.org/wikipedia/commons/f/f0/Alessandro_Michieletto_%28Legavolley_2021%29.png",
+  "cover":"https://volleybox.net/media/upload/players/1683112106gag0n.png",
   "password":"0000",
   "role":"outside-hitter",
   "requestedTeam":"6542b0083f83da4168a24a7b",
@@ -96,9 +96,9 @@ POST http://localhost:3001/events/create HTTP/1.1
 Content-Type: application/json
 
 {
-  "title":"Prova",
-  "content":"Testo di prova",
-  "team":"654f94ccf578e0b32fe81e0c"
+  "title":"Partita Sabato 1/12",
+  "content":"Modena Volley vs LUBE Civitanova",
+  "team":"6542b0083f83da4168a24a7b"
 }
 
 
